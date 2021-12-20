@@ -1,0 +1,132 @@
+body {
+  font-family: HSBC-Font;
+}
+p {
+  font-size: 16px;
+}
+/* theme style start*/
+
+.btn-primary {
+  background-color: #db0011;
+  color: #fff;
+}
+.btn-primary:hover,
+.btn-primary.active.focus,
+.btn-primary.active:focus,
+.btn-primary.active:hover,
+.btn-primary:active.focus,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.open > .dropdown-toggle.btn-primary.focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.open > .dropdown-toggle.btn-primary:hover {
+  background-color: #83000d;
+}
+
+.btn-secondary {
+  background-color: #008580;
+  color: #fff;
+}
+.btn-secondary.active.focus,
+.btn-secondary.active:focus,
+.btn-secondary.active:hover,
+.btn-secondary:active.focus,
+.btn-secondary:active:focus,
+.btn-secondary:active:hover{
+  background-color: #00716C;
+}
+.btn {
+  font-size: 14px;
+  border-radius: 0px;
+}
+.active button{color:#fff;}
+.navbar-brand{font-size: 14px;}
+/* theme style close */
+.container {
+  max-width: 1280px;
+  width: 100%;
+}
+.table th {
+  background-color: #cbd0d6;
+}
+.m-1 {
+  margin-top: 20px;
+}
+.headding {
+  padding: 0px;
+  margin: 0px;
+}
+.margin {
+  margin-bottom: 45px;
+}
+.navbar > .container .navbar-brand {
+  color: #fff;
+}
+.bg-1 {
+  background-color: #000;
+  margin-bottom: 0px;
+  color: #ffffff;
+  border-radius: 0px;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.bg-4 {
+  background-color: #2f2f2f;
+  color: #fff;
+  border-radius: 0px;
+}
+.navbar-brand > img {
+  max-height: 26px;
+}
+.navbar-brand.logo{
+  padding-top: 12px;
+}
+.log_out a {
+  background-color: #506576;
+  display: block;
+  padding: 3px 10px;
+  margin-top: 10px;
+  color: #9d9d9d;
+}
+.key-value td {
+  width: 50%;
+}
+.log_out a:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+.scroll-table {
+  max-height: 410px;
+  overflow: auto;
+}
+.scroll-table-sm {
+  height: 200px;
+  overflow: auto;
+}
+
+.table > tbody > tr.active > td {
+  background-color: #5b9cd7;
+  color: #fff;
+}
+.text-danger {
+  color: red;
+}
+
+.footer-btn {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background: #fff;
+}
+
+.fixtable {
+  max-height: 340px;
+  overflow: auto;
+  min-height: 200px;
+}
+
+.create {
+  margin-top: 23px;
+}
