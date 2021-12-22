@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom'
 import ConfirmationModel from '../../components/confirmation/ConfirmationModel';
 import { withRouter } from 'react-router-dom';
+import XLSX from 'xlsx';
 
 
 const NewAdjustments = (props) => {
@@ -10,6 +11,8 @@ const NewAdjustments = (props) => {
     const [isShowModel, setIsShowModel] = useState(false)
     const [selectedIndex, setSelectedIndex] = useState();
     const [selectedIndexData, setSelectedIndexData] = useState();
+    const [selectedFile, setSelectedFile] = useState({});
+    const [fileUploaded, setFileUploaded] = useState({});
     const [dates, setDates] = useState({
         start: "2022-06-01",
         end: "2022-06-01",
@@ -31,15 +34,15 @@ const NewAdjustments = (props) => {
                         }
                     })
                 }
-
                 setNewAdjustmentsData(res.data)
-
             })
     }
 
     const getParametar = (key) => {
         return new URLSearchParams(props.location.search).get(key)
     }
+
+  
 
     useEffect(() => {
         creatNew();
@@ -101,6 +104,58 @@ const NewAdjustments = (props) => {
         console.log(rowupdate)
         setDates(rowupdate);
     }
+
+     const changeFileHandler = (event) => {
+        setSelectedFile({ selectedFile: event.target.files[0] });
+        console.log('file name : ', event.target.files[0].name);
+    }
+
+    const fileUploadHandler = (e) => {
+        console.log('upload file called..')
+    e.preventDefault();
+
+    var files = e.target.files, f = files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var data = e.target.result;
+        let readedData = XLSX.read(data, {type: 'binary'});
+        const wsname = readedData.SheetNames[0];
+        const ws = readedData.Sheets[wsname];
+
+        /* Convert array to json*/
+        //const dataParse = XLSX.utils.sheet_to_json(ws, {header:1});
+        const dataParse = XLSX.utils.sheet_to_csv(ws, {header:1});
+        const dataJson = prepareJson(dataParse);
+        console.log('json' + dataJson);
+        setFileUploaded(dataJson);
+        console.log('JSON Data : ', dataJson);
+        setNewAdjustmentsData(dataJson)
+    };
+    reader.readAsBinaryString(f)
+}
+
+const prepareJson = (csv) => {
+   
+   var lines = csv.split("\n");
+
+    var result = [];
+
+    var headers = lines[0].split(",");
+
+    for (var i = 1; i < lines.length; i++) {
+      var obj = {};
+      var currentline = lines[i].split(",");
+
+      for (var j = 0; j < headers.length; j++) {
+        obj[headers[j]] = currentline[j];
+      }
+      result.push(obj);
+    }
+
+    //return result; //JavaScript object
+    return result; //JSON
+    
+}
 
     return (
         <div className="new">
@@ -174,9 +229,9 @@ const NewAdjustments = (props) => {
                             </div>
                             <div className="col-sm-2">
                                 <div className="form-group">
-                                    <label for="email"> Upload Adjsutment:</label>
+                                    <label for="upload"> Upload Ajustment </label>
                                     <span className="date">
-                                        <input type="file" className="form-control" name="adjustment_file_excel" id="adjustment_file" />
+                                        <input type="file" className="form-control" name="adjustment_file_excel" id="adjustment_file" onChange={(e) => fileUploadHandler(e)} />
                                     </span>
                                 </div>
                             </div>
@@ -234,11 +289,30 @@ const NewAdjustments = (props) => {
                                     ))
                                     }
 
-                                    {newAdjustmentsData.length < 1 &&
-                                        <tr>
+                                    { console.log('hiii'+ newAdjustmentsData)}
+
+                                    {newAdjustmentsData.length < 1 ?
+                                        (<tr>
                                             <td colspan="4">No Adjustments to show.</td>
-                                        </tr>
-                                    }
+                                        </tr>)
+                                    : newAdjustmentsData.map((row)=> (<tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{row.Non}</td>
+                                        <td>{row.SIC}</td>
+                                        <td>{row.Code}</td>
+                                        <td>{row.Industry}</td>
+                                        <td>{row.Primary}</td>
+                                        <td>{row.CARM}</td>
+                                        <td>{row.Country}</td>
+                                        <td>{row.Underwriting}</td>
+                                        <td>{row.Sell}</td>
+                                        <td>{row.Desc}</td>
+                                        <td>{row.Financially}</td>
+                                        <td>{row.Risk}</td>
+                                        <td>{row.Busines}</td>
+                                        <td>{row.Affiliation}</td>
+                                    </tr>)) }
                                 </tbody>
                             </table>
                         </div>
